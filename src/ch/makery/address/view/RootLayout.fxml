@@ -1,29 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
 <?import java.lang.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40">
+<BorderPane prefHeight="400.0" prefWidth="850.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.address.view.RootLayoutController">
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
+      <MenuBar prefWidth="850.0" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleNew" text="New">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="N" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Open...">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="O" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleSave" text="Save">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="Save As...">
+                     <accelerator>
+                        <KeyCodeCombination alt="ANY" code="S" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+              <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Close">
+                     <accelerator>
+                        <KeyCodeCombination alt="ANY" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" text="Statistique">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+                  <MenuItem mnemonicParsing="false" text="Pays" />
+              <MenuItem mnemonicParsing="false" onAction="#handleShowBirthdayStatistics" text="Anniversaire" />
             </items>
+               <accelerator>
+                  <KeyCodeCombination alt="UP" code="E" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" onAction="#handleAbout" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
             </items>
+               <accelerator>
+                  <KeyCodeCombination alt="UP" code="H" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator>
           </Menu>
         </menus>
       </MenuBar>

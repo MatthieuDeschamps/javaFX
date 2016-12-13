@@ -8,9 +8,10 @@ import ch.makery.address.MainApp;
 import ch.makery.address.model.Person;
 import ch.makery.adress.util.DateUtil;
 import javafx.scene.control.Alert;
-
+import javafx.scene.control.Alert.AlertType;
 
 public class PersonOverviewController {
+
     @FXML
     private TableView<Person> personTable;
     @FXML
@@ -30,18 +31,19 @@ public class PersonOverviewController {
     private Label cityLabel;
     @FXML
     private Label birthdayLabel;
+
     @FXML
-    private void handleDeletePerson(){
+    private void handleDeletePerson() {
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
-        if(selectedIndex >=0){
-             personTable.getItems().remove(selectedIndex);       
-        }else{
+        if (selectedIndex >= 0) {
+            personTable.getItems().remove(selectedIndex);
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(mainApp.getPrimaryStage());
             alert.setTitle("Pas de sélection!!");
             alert.setHeaderText("Pas de personne sélectionnée");
             alert.setContentText("Sélectionnez une personne dans le tableau");
-            
+
             alert.showAndWait();
         }
 
@@ -51,8 +53,8 @@ public class PersonOverviewController {
     private MainApp mainApp;
 
     /**
-     * The constructor.
-     * The constructor is called before the initialize() method.
+     * The constructor. The constructor is called before the initialize()
+     * method.
      */
     public PersonOverviewController() {
     }
@@ -63,23 +65,23 @@ public class PersonOverviewController {
      */
     @FXML
     private void initialize() {
-    	// Initialize the person table with the two columns.
+        // Initialize the person table with the two columns.
         firstNameColumn.setCellValueFactory(
-        		cellData -> cellData.getValue().firstNameProperty());
+                cellData -> cellData.getValue().firstNameProperty());
         lastNameColumn.setCellValueFactory(
-        		cellData -> cellData.getValue().lastNameProperty());
-        
+                cellData -> cellData.getValue().lastNameProperty());
+
         // Clear person details.
         showPersonDetails(null);
 
         // Listen for selection changes and show the person details when changed.
-		personTable.getSelectionModel().selectedItemProperty().addListener(
-				(observable, oldValue, newValue) -> showPersonDetails(newValue));
+        personTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> showPersonDetails(newValue));
     }
 
     /**
      * Is called by the main application to give a reference back to itself.
-     * 
+     *
      * @param mainApp
      */
     public void setMainApp(MainApp mainApp) {
@@ -88,22 +90,56 @@ public class PersonOverviewController {
         // Add observable list data to the table
         personTable.setItems(mainApp.getPersonData());
     }
-    
-    private void showPersonDetails(Person person){
-        if(person !=null){
+
+    private void showPersonDetails(Person person) {
+        if (person != null) {
             firstNameLabel.setText(person.getFirstName());
             lastNameLabel.setText(person.getLastName());
             streetLabel.setText(person.getStreet());
             postalCodeLabel.setText(Integer.toString(person.getPostalCode()));
             cityLabel.setText(person.getCity());
             birthdayLabel.setText(DateUtil.format(person.getBirthday()));
-        }else{
+        } else {
             firstNameLabel.setText(" ");
             lastNameLabel.setText(" ");
             streetLabel.setText(" ");
             postalCodeLabel.setText(" ");
             cityLabel.setText(" ");
             birthdayLabel.setText(" ");
+        }
+    }
+
+    @FXML
+    private void handleNewPerson() {
+        Person tempPerson = new Person();
+        boolean okClicked = mainApp.showPersonNewDialog(tempPerson);
+        if (okClicked) {
+            mainApp.getPersonData().add(tempPerson);
+        }
+    }
+
+    /**
+     * Called when the user clicks the edit button. Opens a dialog to edit
+     * details for the selected person.
+     */
+    @FXML
+    private void handleEditPerson() {
+        Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
+        if (selectedPerson != null) {
+            boolean okClicked = mainApp.showPersonEditDialog(selectedPerson);
+            if (okClicked) {
+                showPersonDetails(selectedPerson);
+            }
+
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(mainApp.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Person Selected");
+            alert.setContentText("Please select a person in the table.");
+
+            alert.showAndWait();
         }
     }
 }

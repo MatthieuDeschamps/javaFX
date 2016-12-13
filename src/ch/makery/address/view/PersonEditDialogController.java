@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ch.makery.address.view;
 
 import javafx.fxml.FXML;
@@ -12,12 +7,14 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ch.makery.address.model.Person;
 import ch.makery.adress.util.DateUtil;
+
 /**
+ * Dialog to edit details of a person.
  *
  * @author mdeschamps
  */
 public class PersonEditDialogController {
-    
+
     @FXML
     private TextField firstNameField;
     @FXML
@@ -30,7 +27,7 @@ public class PersonEditDialogController {
     private TextField cityField;
     @FXML
     private TextField birthdayField;
-
+    
 
     private Stage dialogStage;
     private Person person;
@@ -51,6 +48,7 @@ public class PersonEditDialogController {
      */
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
+        
     }
 
     /**
@@ -155,10 +153,13 @@ public class PersonEditDialogController {
             alert.setTitle("Invalid Fields");
             alert.setHeaderText("Please correct invalid fields");
             alert.setContentText(errorMessage);
+            
 
             alert.showAndWait();
 
             return false;
         }
     }
+    
+    
 }
